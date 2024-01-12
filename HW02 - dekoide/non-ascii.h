@@ -1,8 +1,6 @@
 #ifndef H_NON_ASCII
 #define H_NON_ASCII
 
-#include <stdint.h>
-
 static const char *KOI8R_TABLE[] = {
     "\u2500",
     "\u2502",
@@ -289,7 +287,7 @@ static const char *CP1251_TABLE[] = {
     "\u2022",
     "\u2013",
     "\u2014",
-    "\u02dc", // unknown symbol alt-0152
+    "\u02dc",
     "\u2122",
     "\u0459",
     "\u203a",
