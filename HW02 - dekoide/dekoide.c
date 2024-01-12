@@ -89,7 +89,7 @@ const char *decode_byte(unsigned char c, enum encodings_e encoding)
     case KOI8R:
         return KOI8R_TABLE[a];
     case ISO_8859_5:
-        return ISO_8859_5_TABLE[0];
+        return ISO_8859_5_TABLE[a];
     default:
         return NULL;
     }
