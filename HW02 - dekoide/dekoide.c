@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <unistd.h>
 #include <string.h>
+#include <strings.h>
 
 #include "non-ascii.h"
 
@@ -39,11 +40,11 @@ int main(int argc, const char *argv[])
 
     if (argc > 2)
     {
-        if (strncmp(argv[2], "cp", 2) == 0 || strncmp(argv[2], "CP", 2) == 0)
+        if (strncasecmp(argv[2], "cp", 2) == 0)
             encoding = CP1251;
-        else if (strncmp(argv[2], "koi", 3) == 0 || strncmp(argv[2], "KOI", 3) == 0)
+        else if (strncasecmp(argv[2], "koi", 3) == 0)
             encoding = KOI8R;
-        else if (strncmp(argv[2], "iso", 3) == 0 || strncmp(argv[2], "ISO", 3) == 0)
+        else if (strncasecmp(argv[2], "iso", 3) == 0)
             encoding = ISO_8859_5;
         else
             printf("WARNING: cannot find your encoding, try to decode from CP-1251.\n");
@@ -59,8 +60,6 @@ int main(int argc, const char *argv[])
             printf("ERROR: cannot create output file.\n");
             goto close_input;
         }
-        const char *x = "\u2030";
-        fwrite(x, 1, strlen(x), output);
     }
     else
         output = NULL;
@@ -88,7 +87,7 @@ const char *decode_byte(unsigned char c, enum encodings_e encoding)
     case CP1251:
         return CP1251_TABLE[a];
     case KOI8R:
-        return KOI8R_TABLE[0];
+        return KOI8R_TABLE[a];
     case ISO_8859_5:
         return ISO_8859_5_TABLE[0];
     default:
@@ -104,10 +103,9 @@ int run(FILE *input, enum encodings_e encoding, FILE *output)
         output = stdout;
     for (size_t i = 0; i < 128; ++i)
     {
-        printf("%s", CP1251_TABLE[i]);
-        fwrite(CP1251_TABLE[i], 1, strlen(CP1251_TABLE[i]), output);
+        printf("%s", KOI8R_TABLE[i]);
     }
-    return 0;
+    printf("\n");
     do
     {
         n = fread(buf, 1, MAX_BUF_SIZE, input);
