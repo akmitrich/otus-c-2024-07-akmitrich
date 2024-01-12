@@ -12,6 +12,8 @@ enum encodings_e
     ISO_8859_5
 };
 
+const char *encoding_str[] = {"CP-1251", "KOI-8r", "ISO-8859-5"};
+
 static int run(FILE *input, enum encodings_e encoding, FILE *output);
 
 int main(int argc, const char *argv[])
@@ -52,9 +54,11 @@ int main(int argc, const char *argv[])
     else
         encoding = CP1251;
 
+    const char *output_name;
     if (argc == 4)
     {
-        output = fopen(argv[3], "wb");
+        output_name = argv[3];
+        output = fopen(output_name, "wb");
         if (output == NULL)
         {
             printf("ERROR: cannot create output file.\n");
@@ -62,9 +66,12 @@ int main(int argc, const char *argv[])
         }
     }
     else
+    {
         output = NULL;
+        output_name = "'stdout'";
+    }
 
-    printf("SINOPSIS: Take file %p encoded with %d and save it to the %p\n", (void *)input, encoding, (void *)output);
+    printf("SINOPSIS: Take file %s encoded with %s and save it to the %s\n", argv[1], encoding_str[encoding], output_name);
     run(input, encoding, output);
 
     if (output)
@@ -101,10 +108,7 @@ int run(FILE *input, enum encodings_e encoding, FILE *output)
     size_t n;
     if (output == NULL)
         output = stdout;
-    for (size_t i = 0; i < 128; ++i)
-    {
-        printf("%s", KOI8R_TABLE[i]);
-    }
+
     printf("\n");
     do
     {
