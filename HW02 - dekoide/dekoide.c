@@ -6,13 +6,6 @@
 
 #include "non-ascii.h"
 
-enum encodings_e
-{
-    CP1251,
-    KOI8R,
-    ISO_8859_5
-};
-
 const char *encoding_str[] = {"CP-1251", "KOI-8r", "ISO-8859-5"};
 
 static int run(FILE *input, enum encodings_e encoding, FILE *output);
@@ -84,24 +77,6 @@ close_input:
     fclose(input);
 
     return r;
-}
-
-const char *decode_byte(unsigned char c, enum encodings_e encoding)
-{
-    unsigned char a = c & 0x7f;
-    if (a == c)
-        return NULL;
-    switch (encoding)
-    {
-    case CP1251:
-        return CP1251_TABLE[a];
-    case KOI8R:
-        return KOI8R_TABLE[a];
-    case ISO_8859_5:
-        return ISO_8859_5_TABLE[a];
-    default:
-        return NULL;
-    }
 }
 
 #define MAX_BUF_SIZE 4096
