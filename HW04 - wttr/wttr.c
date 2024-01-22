@@ -10,6 +10,7 @@ struct JseHandler
 };
 
 static size_t json_write_to_buffer(void *data, size_t size, size_t nmemb, void *clientp);
+static void json_print_info(const char *json);
 
 int main(void)
 {
@@ -32,7 +33,9 @@ int main(void)
         printf("ERROR: could not curl easy perform, %s\n", curl_easy_strerror(res));
     curl_easy_cleanup(curl);
 
-    printf("OK: %d\n%s\n", res, json_handler.buffer);
+    printf("OK: %d\nLoaded %lu bytes.\n", res, json_handler.size);
+    json_print_info(json_handler.buffer);
+
     return EXIT_SUCCESS;
 }
 
@@ -55,4 +58,9 @@ size_t json_write_to_buffer(void *data, size_t size, size_t nmemb, void *clientp
     handler->size = new_jse_size;
 
     return arrived_size;
+}
+
+void json_print_info(const char *json)
+{
+    printf("Loaded:\n%s", json);
 }
