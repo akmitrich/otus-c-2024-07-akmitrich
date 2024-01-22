@@ -4,4 +4,4 @@ OUT_DIR=../bin
 OBJ_DIR=../obj
 
 wttr: wttr.c 
-	$(CC) $(CFLAGS) -o $(OUT_DIR)/wttr wttr.c -lcurl
+	$(CC) $(CFLAGS) -o $(OUT_DIR)/wttr wttr.c ./cJSON/cJSON.c -lcurl

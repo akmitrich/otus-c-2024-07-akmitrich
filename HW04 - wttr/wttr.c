@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <curl/curl.h>
+#include "cJSON/cJSON.h"
 
 struct JseHandler
 {
@@ -42,6 +43,7 @@ int main(void)
 size_t json_write_to_buffer(void *data, size_t size, size_t nmemb, void *clientp)
 {
     size_t arrived_size = size * nmemb;
+    printf("Arrived: %lu bytes\n", arrived_size);
     struct JseHandler *handler = (struct JseHandler *)clientp;
     size_t old_size = handler->size;
     size_t new_jse_size = old_size + arrived_size;
@@ -60,7 +62,15 @@ size_t json_write_to_buffer(void *data, size_t size, size_t nmemb, void *clientp
     return arrived_size;
 }
 
-void json_print_info(const char *json)
+void json_print_info(const char *json_str)
 {
-    printf("Loaded:\n%s", json);
+    cJSON *json = cJSON_Parse(json_str);
+    if (json == NULL)
+    {
+        printf("ERROR: could not parse JSON.\n");
+        return;
+    }
+    json = cJSON_GetObjectItem(json, "current_condition");
+    json = cJSON_GetArrayItem(json, 0);
+    printf("current condition:\n%s", cJSON_Print(json));
 }
