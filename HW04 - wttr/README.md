@@ -10,4 +10,3 @@
 - [ ] Код компилируется без предупреждений с ключами компилятора -Wall -Wextra -Wpedantic -std=c11.
 
 ## JSON-парсер
-Выбрана библиотека [J-Sense](https://gitlab.com/greggink/youtube_episode_jsense). Автор Gregg Ink.
