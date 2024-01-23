@@ -39,7 +39,7 @@ int print_weather(const char *location)
     static const char *fmt_json = "?format=j1";
     if (strlen(location) > LOCATION_MAX_LEN - strlen(base_url) - strlen(fmt_json))
     {
-        printf("ERROR: location name %s length is too long.\n", location);
+        printf("ERROR: location name %s is too long.\n", location);
         return EXIT_FAILURE;
     }
     struct JseHandler json_handler = {0};
