@@ -2,9 +2,7 @@
 
 [ERROR] (main.c @ 7) Sometimes hit happens. Here is your call stack
 Traceback of 6 stack frames.
-	../bin/example(+0x15f9) [0x5602c47345f9]
-	../bin/example(+0x1598) [0x5602c4734598]
-	../bin/example(+0x1273) [0x5602c4734273]
-	../bin/example(+0x12eb) [0x5602c47342eb]
-	/lib/x86_64-linux-gnu/libc.so.6(__libc_start_main+0xf3) [0x7fbe0b935083]
-	../bin/example(+0x118e) [0x5602c473418e]
+	../bin/log_example(+0x1273) [0x55ab6bd70273]
+	../bin/log_example(+0x12eb) [0x55ab6bd702eb]
+	/lib/x86_64-linux-gnu/libc.so.6(__libc_start_main+0xf3) [0x7efe6cfa6083]
+	../bin/log_example(+0x118e) [0x55ab6bd7018e]

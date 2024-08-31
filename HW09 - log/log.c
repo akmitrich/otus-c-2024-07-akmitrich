@@ -33,6 +33,22 @@ void log_done(void)
         fclose(LOG_FILE);
 }
 
+void log_trace(void)
+{
+    void *return_addresses[TRACE_DEPTH];
+    int size = backtrace(return_addresses, TRACE_DEPTH);
+    char **trace_entries = backtrace_symbols(return_addresses, size);
+    FILE *log_file = current_log_file();
+    if (trace_entries)
+    {
+        fprintf(log_file, "Traceback of %d stack frames.\n", size);
+        // First two entries are `log_trace` and `log_msg` so we ignore them both
+        for (int i = 2; i < size; i++)
+            fprintf(log_file, "\t%s\n", trace_entries[i]);
+        free(trace_entries);
+    }
+}
+
 void log_msg(LogLevel level, const char *filename, int linenumber, const char *fmt, ...)
 {
     if (level >= LOG_LEVEL)
@@ -63,21 +79,5 @@ void log_msg(LogLevel level, const char *filename, int linenumber, const char *f
         va_end(args);
         if (level == ERROR)
             log_trace();
-    }
-}
-
-void log_trace(void)
-{
-    void *return_addresses[TRACE_DEPTH];
-    int size = backtrace(return_addresses, TRACE_DEPTH);
-    char **trace_entries = backtrace_symbols(return_addresses, size);
-    FILE *log_file = current_log_file();
-    if (trace_entries)
-    {
-        fprintf(log_file, "Traceback of %d stack frames.\n", size);
-        // First two entries are `log_trace` and `log_msg` so we ignore them both
-        for (int i = 2; i < size; i++)
-            fprintf(log_file, "\t%s\n", trace_entries[i]);
-        free(trace_entries);
     }
 }
