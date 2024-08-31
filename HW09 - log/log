@@ -1,0 +1,6 @@
+Traceback of 5 stack frames.
+	../bin/example(+0x1281) [0x55e73596e281]
+	../bin/example(+0x11f6) [0x55e73596e1f6]
+	../bin/example(+0x1223) [0x55e73596e223]
+	/lib/x86_64-linux-gnu/libc.so.6(__libc_start_main+0xf3) [0x7fbc76207083]
+	../bin/example(+0x112e) [0x55e73596e12e]
