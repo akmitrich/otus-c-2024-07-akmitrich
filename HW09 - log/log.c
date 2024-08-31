@@ -5,6 +5,8 @@
 
 #include "log.h"
 
+#define TRACE_DEPTH 1024
+
 static LogLevel LOG_LEVEL = DEBUG;
 static FILE *LOG_FILE = NULL;
 
